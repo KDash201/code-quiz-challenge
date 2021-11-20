@@ -1,0 +1,44 @@
+* {
+    margin-right: 34px;
+    margin-left: 34px;
+}
+
+.viewScore {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h1#view-score {
+    margin: 24px;
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+.timer {
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 68px;
+    font-family: georgia, serif;
+}
+
+main h1 {
+    font-size: 40px;
+}
+
+main p {
+    font-size: 20px;
+    flex-wrap: wrap;
+    padding: 0px 50px;
+}
+
+hr.rounded {
+    border-top: 3px dashed purple;
+    border-radius: 0px;
+}
