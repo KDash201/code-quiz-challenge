@@ -1,4 +1,5 @@
 // Selected Elements
+const homePageEl = document.querySelector("home-page");
 const startEl = document.querySelector(".start");
 const headerEl = document.getElementById("header");
 const viewScoreEl = document.getElementById("view-score");
@@ -6,6 +7,15 @@ const timerEl = document.getElementById("timer");
 const containStartEl = document.getElementById("contain-start");
 const questionsEl = document.getElementById("questions");
 const choicesEl = document.getElementById("choices");
+
+startEl.addEventListener("click", function () {
+});
+
+// startEl.remove();
+
+// startEl.style.display = "none"
+// containStartEl.style.display = "block"
+
 
 let askQuestions = [
   {
@@ -32,7 +42,12 @@ let askQuestions = [
 },
 ];
 
-startEl.addEventListener("click", function () {
-  alert("button clicked");
-  console.log(startEl);
-});
+const showQuestions = function() {
+return askQuestions;
+}
+
+console.log(askQuestions);
+
+const Quiz = function(askQuestions) {
+
+}
