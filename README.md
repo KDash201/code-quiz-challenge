@@ -10,4 +10,4 @@
 
 - Clone my repo and open the html file in a browser.
 
-![Screenshot](code-assessment-image.png)
+![Homepage](code-assessment-image.png)
