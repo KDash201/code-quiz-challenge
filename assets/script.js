@@ -1,69 +1,150 @@
 // Selected Elements
-const homePageEl = document.querySelector("home-page");
-const startEl = document.querySelector(".start");
-const headerEl = document.getElementById("header");
-const viewScoreEl = document.getElementById("view-score");
-const timerEl = document.getElementById("timer");
-const containStartEl = document.getElementById("contain-start");
-const questionsEl = document.getElementById("questions");
-const choicesEl = document.getElementById("choices");
 
-let counter = 30;
-let countdown = function () {
-  console.log(counter);
-  counter--;
-  if (counter === 0) {
-    console.log("Test Completed!");
-    clearInterval(startCountdown);
+let askQuestions = [
+  {
+    question:
+      "Which attribute requires you to put a hashtag before the name when declaring it in CSS?",
+    choiceA: "Id",
+    choiceB: "Class",
+    choiceC: "Href",
+    correct: "A",
+  },
+  {
+    question: "How many HTML heading tags are there?",
+    choiceA: "4",
+    choiceB: "6",
+    choiceC: "3",
+    correct: "B",
+  },
+  {
+    question: "Which HTML tag defines a paragraph?",
+    choiceA: "<img>",
+    choiceB: "<ol>",
+    choiceC: "<p>",
+    correct: "C",
+  },
+];
+
+let homePageEl = document.getElementById("home-page");
+let startEl = document.querySelector(".start");
+let headerEl = document.getElementById("header");
+let viewScoreEl = document.getElementById("view-score");
+let timerEl = document.getElementById("timer");
+let containStartEl = document.getElementById("contain-start");
+let questionsEl = document.getElementById("questions");
+let choicesEl = document.getElementById("choices");
+let timer = document.getElementById("timer");
+
+questionIndex = 0;
+let time = questions.length * 15;
+let scores = [];
+
+let startCountdown;
+
+function startQuiz() {
+  homePageEl.setAttribute("class", "hide");
+  questionsEl.removeAttribute("class");
+  startCountdown = setInterval(countdown, 1000);
+  timer.textContent = time;
+
+  showQuestions();
+}
+
+let buttonHandler = function (event) {
+  let correct = event.target;
+
+  if (correct.textContent == questions[questionIndex].correct) {
+    rightWrong.textContent = "Correct!";
+  } else {
+    time = time - 10;
+    rightWrong.textContent = "Wrong!";
   }
+  questionIndex++;
+  if (questionIndex >= questions.length) {
+    quizStop();
+  } else {
+    questionRender(questionIndex);
+  }
+  questionEl.appendChild(rightWrong);
 };
 
-let startCountdown = setInterval(countdown, 1000);
+function endGame() {
+  clearInterval(startCountdown);
+  questionsEl.innerHTML = "";
+  timer.innerHTML = "";
 
-// startEl.remove();
+  let endHeader = document.createElement("h1");
+  endHeader.setAttribute("id", "end-header");
+  endHeader.textContent = "All Done!";
+  questionEl.appendChild(endHeader);
 
-// startEl.style.display = "none"
-// containStartEl.style.display = "block"
+  let pScore = document.createElement("p");
+  pScore.setAttribute("id", "final-score");
+  if (time >= 0) {
+    let finalScore = time;
+    pScore.textContent = "Your final score is " + finalScore;
+  }
+  questionEl.appendChild(pScore);
 
-let askQuestions = function () {
-  [
-    {
-      question:
-        "Which attribute requires you to put a hashtag before the name when declaring it in CSS?",
-      choiceA: "Id",
-      choiceB: "Class",
-      choiceC: "Href",
-      correct: "A",
-    },
-    {
-      question: "How many HTML heading tags are there?",
-      choiceA: "4",
-      choiceB: "6",
-      choiceC: "3",
-      correct: "B",
-    },
-    {
-      question: "Which HTML tag defines a paragraph?",
-      choiceA: "<img>",
-      choiceB: "<ol>",
-      choiceC: "<p>",
-      correct: "C",
-    },
-  ];
+  let inputForm = document.createElement("div");
+  inputForm.setAttribute("id", "input-form");
+  questionEl.appendChild(inputForm);
 
-  let showQuestions = function () {
-    for (let i = 0; i < askQuestions.length; i++) {
-      return askQuestions.length;
+  let initialLabel = document.createElement("label");
+  initialLabel.setAttribute("id", "initial-label");
+  initialLabel.textContent = "Enter you initials: ";
+  inputForm.appendChild(initialLabel);
+
+  let initalForm = document.createElement("input");
+  initalForm.setAttribute("type", "text");
+  initalForm.setAttribute("id", "initial-form");
+  inputForm.appendChild(initalForm);
+
+  let submitBtn = document.createElement("button");
+  submitBtn.setAttribute("type", "submit");
+  submitBtn.setAttribute("id", "form-submit");
+  submitBtn.textContent = "Submit";
+  inputForm.appendChild(submitBtn);
+
+  submitBtn.onclick = function () {
+    let initals = initalForm.value;
+    console.log(initals);
+    if (initals === "") {
+      window.alert("Please enter your initials!");
+    } else {
+      let endScore = {
+        initals: initals,
+        score: finalScore,
+        id: scoreIdCounter,
+      };
+
+      scores.push(endScore);
+      localStorage.setItem("scores", JSON.stringify(scores));
+      scoreIdCounter++;
     }
-    return askQuestions;
   };
-};
+}
+
+function questionRender() {
+  let questionCall = document.getElementById("questions");
+  let questionList = questions[questionIndex];
+  questionCall.textContent = questionList.title;
+  choicesEl.innerHTML = "";
+  questionList.choices.forEach(function (choice, i) {
+    let choiceButton = document.createElement("button");
+    choiceButton.setAttribute("value", choice);
+    choiceButton.setAttribute("id", "choice");
+    choiceButton.textContent = choice;
+    choicesEl.appendChild(choiceButton);
+    choiceButton.addEventListener("click", buttonHandler);
+  });
+}
 
 console.log(askQuestions);
 
 let Quiz = function (askQuestions) {};
 
-startEl.addEventListener("click", showQuestions);
+startEl.addEventListener("click", startQuiz);
 // buttonEl.addEventListener("click", function () {});
 // startEl.addEventListener("click", function () {});
 // startEl.addEventListener("click", function () {});
