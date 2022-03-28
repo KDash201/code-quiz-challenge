@@ -1,6 +1,6 @@
 * {
-    margin-right: 34px;
-    margin-left: 34px;
+  margin-right: 34px;
+  margin-left: 34px;
 }
 
 .hide{
@@ -8,59 +8,60 @@
 }
 
 #header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 h1#view-score {
-    margin: 24px;
-    font-size: 24px;
-    font-weight: bolder;
+  margin: 24px;
+  font-size: 25px;
+  font-weight: bolder;
 }
 
 #timer {
-    font-size: 25px;
-    font-weight: bolder;
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+span {
+  color: purple;
 }
 
 /* Hero Section */
 main {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin: 68px;
-    font-family: georgia, serif;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 68px;
+  font-family: georgia, serif;
 }
 
 main h1 {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 main p {
-    font-size: 20px;
-    flex-wrap: wrap;
-    padding: 0px 50px;
+  font-size: 20px;
+  flex-wrap: wrap;
+  padding: 0px 50px;
 }
 
 
 hr.rounded {
-    border-top: 3px dashed purple;
-    border-radius: 0px;
+  border-top: 3px dashed purple;
+  border-radius: 0px;
 }
 
-
-
 .start {
-    transition-duration: 0.4s;
-    background-color: white;
-    border: 2px solid purple;
-    color: black;
-    width: 50%;
-
+  transition-duration: 0.4s;
+  background-color: white;
+  border: 2px solid purple;
+  color: black;
+  width: 50%;
 }
 
 .start:hover {
-    background-color: purple;
-    color: white;
+  background-color: purple;
+  color: white;
 }
