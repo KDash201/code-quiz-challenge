@@ -4,24 +4,18 @@ let askQuestions = [
   {
     question:
       "Which attribute requires you to put a hashtag before the name when declaring it in CSS?",
-    choiceA: "Id",
-    choiceB: "Class",
-    choiceC: "Href",
-    correct: "A",
+    choices: ["Id", "Class", "Href"],
+    correct: "Id",
   },
   {
     question: "How many HTML heading tags are there?",
-    choiceA: "4",
-    choiceB: "6",
-    choiceC: "3",
-    correct: "B",
+    choices: ["4", "6", "3"],
+    correct: "",
   },
   {
     question: "Which HTML tag defines a paragraph?",
-    choiceA: "<img>",
-    choiceB: "<ol>",
-    choiceC: "<p>",
-    correct: "C",
+    choices: ["<img>", "<ol>", "<p>"],
+    correct: "<p>",
   },
 ];
 
@@ -36,10 +30,10 @@ let choicesEl = document.getElementById("choices");
 let timer = document.getElementById("timer");
 
 questionIndex = 0;
-let time = questions.length * 15;
+let time = askQuestions.length * 15;
 let scores = [];
-
 let startCountdown;
+let scoreCounter = 0;
 
 function startQuiz() {
   homePageEl.setAttribute("class", "hide");
@@ -50,20 +44,23 @@ function startQuiz() {
   showQuestions();
 }
 
+var rightWrong = document.createElement("div");
+rightWrong.setAttribute("id", "right-wrong");
+
 let buttonHandler = function (event) {
   let correct = event.target;
 
-  if (correct.textContent == questions[questionIndex].correct) {
+  if (correct.textContent == askQuestions[questionIndex].correct) {
     rightWrong.textContent = "Correct!";
   } else {
     time = time - 10;
     rightWrong.textContent = "Wrong!";
   }
   questionIndex++;
-  if (questionIndex >= questions.length) {
-    quizStop();
+  if (questionIndex >= askQuestions.length) {
+    endGame();
   } else {
-    questionRender(questionIndex);
+    showQuestions(questionIndex);
   }
   questionEl.appendChild(rightWrong);
 };
@@ -75,36 +72,36 @@ function endGame() {
 
   let endHeader = document.createElement("h1");
   endHeader.setAttribute("id", "end-header");
-  endHeader.textContent = "All Done!";
+  endHeader.textContent = "Complete!!";
   questionEl.appendChild(endHeader);
 
-  let pScore = document.createElement("p");
-  pScore.setAttribute("id", "final-score");
+  let newScore = document.createElement("p");
+  newScore.setAttribute("id", "final-score");
   if (time >= 0) {
     let finalScore = time;
-    pScore.textContent = "Your final score is " + finalScore;
+    newScore.textContent = "Your final score is " + finalScore;
   }
-  questionEl.appendChild(pScore);
+  questionEl.appendChild(newScore);
 
-  let inputForm = document.createElement("div");
-  inputForm.setAttribute("id", "input-form");
-  questionEl.appendChild(inputForm);
+  let input = document.createElement("div");
+  input.setAttribute("id", "input-form");
+  questionEl.appendChild(input);
 
   let initialLabel = document.createElement("label");
   initialLabel.setAttribute("id", "initial-label");
   initialLabel.textContent = "Enter you initials: ";
-  inputForm.appendChild(initialLabel);
+  input.appendChild(initialLabel);
 
   let initalForm = document.createElement("input");
   initalForm.setAttribute("type", "text");
   initalForm.setAttribute("id", "initial-form");
-  inputForm.appendChild(initalForm);
+  input.appendChild(initalForm);
 
   let submitBtn = document.createElement("button");
   submitBtn.setAttribute("type", "submit");
   submitBtn.setAttribute("id", "form-submit");
   submitBtn.textContent = "Submit";
-  inputForm.appendChild(submitBtn);
+  input.appendChild(submitBtn);
 
   submitBtn.onclick = function () {
     let initals = initalForm.value;
@@ -125,10 +122,10 @@ function endGame() {
   };
 }
 
-function questionRender() {
+function showQuestions() {
   let questionCall = document.getElementById("questions");
-  let questionList = questions[questionIndex];
-  questionCall.textContent = questionList.title;
+  let questionList = askQuestions[questionIndex];
+  questionCall.textContent = questionList.question;
   choicesEl.innerHTML = "";
   questionList.choices.forEach(function (choice, i) {
     let choiceButton = document.createElement("button");
@@ -140,12 +137,16 @@ function questionRender() {
   });
 }
 
+function countdown() {
+  time--;
+  timer.textContent = time;
+  if (time <= 0) {
+    endQuiz();
+  }
+}
+
 console.log(askQuestions);
 
 let Quiz = function (askQuestions) {};
 
 startEl.addEventListener("click", startQuiz);
-// buttonEl.addEventListener("click", function () {});
-// startEl.addEventListener("click", function () {});
-// startEl.addEventListener("click", function () {});
-// startEl.addEventListener("click", function () {});
